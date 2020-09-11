@@ -9,13 +9,62 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var leftDiceView = 3
+    @State var rightdiceView = 6
+    
     var body: some View {
-        Text("Hello, World!")
+        
+        ZStack {
+            Image("background")
+                .resizable()
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                Image("diceeLogo")
+                Spacer()
+                HStack {
+                    DiceView(n: leftDiceView)
+                    DiceView(n: rightdiceView)
+                }
+                .padding(.horizontal)
+                Spacer()
+                Button(action: {
+                    self.leftDiceView = Int.random(in: 1...6)
+                    self.rightdiceView = Int.random(in: 1...6)
+                }) {
+                    Text("Roll")
+                        .font(.system(size: 40))
+                        .fontWeight(.heavy)
+                        .foregroundColor(.white)
+                        .padding(.horizontal)
+                }
+                .background(Color.red)
+                .cornerRadius(25)
+            }
+        }
+        
     }
 }
 
+
+struct DiceView: View {
+    
+    let n: Int
+    
+    var body: some View {
+        Image("dice\(n)")
+            .resizable()
+            .aspectRatio(1, contentMode: .fit)
+            .padding()
+    }
+    
+}
+
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().previewDevice(PreviewDevice(rawValue: "iPhone Xs"))
     }
 }
+
+
